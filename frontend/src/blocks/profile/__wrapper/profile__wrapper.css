@@ -1,0 +1,17 @@
+.profile__wrapper {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-top: 22.25px;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__wrapper {
+    margin-left: 28px;
+    max-width: 220px;
+    gap: 10px;
+    justify-content: center;
+  }
+}
