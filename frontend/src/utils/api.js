@@ -1,5 +1,6 @@
-const token = 'd241e5f6-5dd3-4846-a8da-a823500c9f8c'
-const baseUrl ='https://mesto.nomoreparties.co/v1/cohort-64'
+// const token = 'd241e5f6-5dd3-4846-a8da-a823500c9f8c'
+// const baseUrl ='https://mesto.nomoreparties.co/v1/cohort-64'
+const baseUrl = 'http://127.0.0.1:4000'
 
 class Api {
   constructor(baseUrl, headers) {
@@ -42,7 +43,7 @@ class Api {
       .then(res => this._checkResponse(res))
   }
 
-  addCardToServer( name, link ) {
+  addCardToServer(name, link) {
     return fetch(`${this._baseUrl}/cards`,
       {
         method: 'POST',
@@ -91,7 +92,9 @@ class Api {
 
 }
 
-export const api = new Api(baseUrl, {
-  authorization: token,
-  'Content-Type': 'application/json'
-});
+export const api = new Api(
+  baseUrl,
+  {
+    authorization: `Bearer ${localStorage.getItem('token')}`,
+    'Content-Type': 'application/json'
+  });
