@@ -9,12 +9,18 @@ const routerUser = require('./routes/users');
 const routerCard = require('./routes/cards');
 const errorsHandler = require('./middlewares/errorsHandler');
 const NotFoundError = require('./errors/NotFoundError');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('cors');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 const app = express();
+
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+
+app.use(requestLogger)
 
 app.use(bodyParser.json());
 app.post('/signin', celebrate({
@@ -42,6 +48,8 @@ app.use('/users', routerUser);
 app.use('/*', () => {
   throw new NotFoundError('Запрашиваемая страница не найдена');
 });
+
+app.use(errorLogger);
 
 app.use(errors()); // обработчик ошибок celebrate
 
