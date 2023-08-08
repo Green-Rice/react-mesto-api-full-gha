@@ -173,6 +173,7 @@ function App() {
       .then(data => {
         if (data.token) {
           localStorage.setItem('token', data.token);
+          console.log(data.token)
           setLoggedIn(true);
           setEmailUser(email)
           navigate('/', { replace: true })
@@ -199,6 +200,8 @@ function App() {
           setLoggedIn(true)
           setEmailUser(res.data.email)
           navigate("/", { replace: true })
+          console.log(res)
+          console.log('avtorizovan')
         })
         .catch((err) => {
           console.log(err)
