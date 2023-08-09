@@ -47,19 +47,23 @@ function App() {
 
   //запрос данных о пользователе с серва
   useEffect(() => {
-    api.getUserInfo().then(data => {
-      setCurrentUser(data)
-    })
+    if(loggedIn){
+      api.getUserInfo().then(data => {
+        setCurrentUser(data)
+      })
+      .catch(err => { console.log(err) });
+      api.getStarterCards().then(card => {
+        setCards(card)
+      })
       .catch(err => { console.log(err) })
-  }, []);
+    }
+  }, [loggedIn]);
 
   //Запрос карточек с серва
-  useEffect(() => {
-    api.getStarterCards().then(card => {
-      setCards(card)
-    })
-      .catch(err => { console.log(err) })
-  }, []);
+  // useEffect(() => {
+
+  //
+  // }, [loggedIn]);
 
   //Обработчики уведомления о регистрации или ...
   function handlePositiveInfoTooltipOpen (){
@@ -155,7 +159,6 @@ function App() {
   }
 
   function handleRegisterUser({ email, password }) {
-    console.log('app')
     registrationUser({ email, password })
       .then(res => { console.log(res) })
       .then(() => {
@@ -173,7 +176,7 @@ function App() {
       .then(data => {
         if (data.token) {
           localStorage.setItem('token', data.token);
-          console.log(data.token)
+          // console.log(data.token)
           setLoggedIn(true);
           setEmailUser(email)
           navigate('/', { replace: true })
@@ -200,8 +203,8 @@ function App() {
           setLoggedIn(true)
           setEmailUser(res.data.email)
           navigate("/", { replace: true })
-          console.log(res)
-          console.log('avtorizovan')
+          // console.log(res)
+          // console.log('avtorizovan')
         })
         .catch((err) => {
           console.log(err)

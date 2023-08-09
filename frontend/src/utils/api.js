@@ -7,6 +7,7 @@ class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
+
   _checkResponse(resolve) {
     if (resolve.ok) {
       return resolve.json();
