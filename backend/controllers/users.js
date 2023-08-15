@@ -77,9 +77,13 @@ const createNewUser = (req, res, next) => {
       } else { return next(err); }
     });
 };
+
 const updateUser = (req, res, next) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
+  return User.findByIdAndUpdate(
+    req.user._id,
+    { name, about },
+    { new: true, runValidators: true })
     .then((user) => {
       if (user) {
         res.status(200).send({ name: user.name, about: user.about });
@@ -123,7 +127,7 @@ const login = (req, res, next) => {
         'dev-secret',
         { expiresIn: '7d' },
       );
-      res.send({ token });
+      res.status(200).send({ token });
       // res.cookie('token', token, { maxAge: 3600000, httpOnly: true }).status(200).send('Авторизация прошла успешно!');
     })
     .catch(next);

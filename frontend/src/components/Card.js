@@ -5,9 +5,9 @@ const Card = (props) => {
 
   const currentUser = React.useContext(CurrentUserContext);
 
-  const isOwn = props.card.owner._id === currentUser._id;  // Определяем, являемся ли мы владельцем текущей карточки
+  const isOwn = props.card.owner === currentUser._id;  // Определяем, являемся ли мы владельцем текущей карточки
 
-  const isLiked = props.card.likes.some((user) => user._id === currentUser._id);// Определяем, есть ли у карточки лайк, поставленный текущим пользователем
+  const isLiked = props.card.likes.some((id) => id === currentUser._id);// Определяем, есть ли у карточки лайк, поставленный текущим пользователем
 
   const cardLikeButtonClassName = (
     `element__like-btn ${isLiked && 'element__like-btn_active'}`// Создаём переменную, которую после зададим в `className` для кнопки лайка
