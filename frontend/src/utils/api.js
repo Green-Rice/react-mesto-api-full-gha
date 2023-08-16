@@ -1,7 +1,3 @@
-// const token = 'd241e5f6-5dd3-4846-a8da-a823500c9f8c'
-// const baseUrl ='https://mesto.nomoreparties.co/v1/cohort-64'
-// const baseUrl = 'http://127.0.0.1:4000'
-
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -27,7 +23,6 @@ class Api {
   }
 
   patchUserInfo({name, about}) {
-    // const token = localStorage.getItem('token')
     return fetch(`${this._baseUrl}/users/me`,
       {
         method: 'PATCH',
@@ -38,7 +33,6 @@ class Api {
   }
 
   getStarterCards() {
-    // const token = localStorage.getItem('token')
     return fetch(`${this._baseUrl}/cards`,
       {
         method: 'GET',
@@ -48,7 +42,6 @@ class Api {
   }
 
   addCardToServer( name, link ) {
-    // const token = localStorage.getItem('token')
     return fetch(`${this._baseUrl}/cards`,
       {
         method: 'POST',
@@ -59,7 +52,6 @@ class Api {
   }
 
   deleteCard(cardId) {
-    // const token = localStorage.getItem('token')
     return fetch(`${this._baseUrl}/cards/${cardId}`,
       {
         method: 'DELETE',
@@ -69,7 +61,6 @@ class Api {
   }
 
   setLikes(cardId) {
-    // const token = localStorage.getItem('token')
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`,
       {
         method: 'PUT',
@@ -79,7 +70,6 @@ class Api {
   }
 
   deleteLikes(cardId) {
-    // const token = localStorage.getItem('token')
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`,
       {
         method: 'DELETE',
@@ -89,7 +79,6 @@ class Api {
   }
 
   setUserAvatar(avatar) {
-    // const token = localStorage.getItem('token')
     return fetch(`${this._baseUrl}/users/me/avatar`,
       {
         method: 'PATCH',
@@ -108,11 +97,8 @@ class Api {
 
 }
 
-
-
-
 export const api = new Api({
-  baseUrl: 'http://localhost:4000',
+  baseUrl: 'https://api.green.nomoreparties.co',
   headers: {
     'Authorization': `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',

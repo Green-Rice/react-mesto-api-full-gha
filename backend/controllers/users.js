@@ -124,11 +124,10 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'dev-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
       res.status(200).send({ token });
-      // res.cookie('token', token, { maxAge: 3600000, httpOnly: true }).status(200).send('Авторизация прошла успешно!');
     })
     .catch(next);
 };
