@@ -41,44 +41,6 @@ function App() {
   //Залогиневшийся юзер
   const [legalUser, setlegalUser] = useState('')
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
-  //   if(token) {
-  //     getToken(token)
-  //       .then(res => {
-  //         setLoggedIn(true)
-  //         setEmailUser(res.email)
-  //         navigate("/", { replace: true })
-  //         // console.log(res)
-  //         // console.log('avtorizovan')
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //       })
-  //   }
-  // }, [navigate])
-
-  // //запрос данных о пользователе с серва
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
-  //   if(token){
-  //     api.getUserInfo().then(data => {
-  //       setCurrentUser(data)
-  //     })
-  //     .catch(err => { console.log(err) });
-  //     api.getStarterCards().then(card => {
-  //       setCards(card)
-  //     })
-  //     .catch(err => { console.log(err) })
-  //   }
-  // }, [loggedIn]);
-
-  //Запрос карточек с серва
-  // useEffect(() => {
-
-  //
-  // }, [loggedIn]);
-
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -97,34 +59,20 @@ function App() {
         setCurrentUser(data);
         setCards(card)
       })
-      // api.getUserInfo()
-      //   .then(data => {
-      //     setCurrentUser(data)
-      //   })
-      //   .catch(err => { console.log(err) });
-      // api.getStarterCards().then(card => {
-      //   setCards(card)
-      // })
       .catch(err => { console.log(err) })
-  }, [loggedIn,setCurrentUser]);
+  }, [loggedIn,]);
 
   function tokenCheck(token) {
-    // const token = localStorage.getItem('token')
-    // if (token) {
     getToken(token)
       .then(res => {
         setLoggedIn(true)
         setEmailUser(res.email)
         navigate("/", { replace: true })
-        // console.log(res)
-        // console.log('avtorizovan')
       })
       .catch((err) => {
         console.log(err)
       })
-    // }
   }
-
 
   //Обработчики уведомления о регистрации или ...
   function handlePositiveInfoTooltipOpen() {
@@ -137,40 +85,25 @@ function App() {
     setlegalUser(false)
   }
 
-
   //обработчик аватара профиля
   function handleUpdateAvatar({ avatar }) {
-    api.setUserAvatar({ avatar }).then(newImgAvatar => {
-      setCurrentUser(newImgAvatar)
+    api.setUserAvatar({ avatar })
+    .then(newImgAvatar => {
+      setCurrentUser({ ...currentUser, avatar: newImgAvatar.avatar })
       closeAllPopups()
     })
       .catch(err => { console.log(err) })
   }
 
-
   //обработчик форм профиля
   function handleUpdateUser({ name, about }) {
     api.patchUserInfo({ name, about })
       .then(userData => {
-        console.log(userData)
-        setCurrentUser(userData)
+        setCurrentUser((state)=> ({...state, ...userData}))
       })
       .then(() => closeAllPopups())
       .catch(err => { console.log(err) })
   }
-  // function handleUpdateUser({ name, about }) {
-  //   api.patchUserInfo({ name, about }).then(userData => {
-  //     setCurrentUser({
-  //     ...userData,
-  //     name: userData.name,
-  //     about: userData.about
-  //     })
-  //     console.log(currentUser)
-  //     closeAllPopups()
-  //   })
-  //     .catch(err => { console.log(err) })
-  // }
-
 
   //удаление карточки
   function handleCardDelete(card) {
@@ -252,7 +185,6 @@ function App() {
       .then(data => {
         if (data.token) {
           localStorage.setItem('token', data.token);
-          // console.log(data.token)
           setLoggedIn(true);
           setEmailUser(email)
           navigate('/', { replace: true })
