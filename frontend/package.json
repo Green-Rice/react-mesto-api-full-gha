@@ -18,7 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && scp -r ./build/* green-rice@158.160.50.150:/home/green-rice/react-mesto-api-full-gha/frontend"
   },
   "eslintConfig": {
     "extends": [
